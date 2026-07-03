@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base:    #000000;
+  --bg-surface: #0a0a0a;
+  --bg-raised:  #141414;
+  --border:     #262626;
+  --brand:      #b026ff;
+  --profit:     #10b981;
+  --loss:       #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-base);
+  color: #f9fafb;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+/* Glowing border utility */
+.border-glow { box-shadow: 0 0 0 1px var(--brand), 0 0 20px rgba(176,38,255,0.1); }
+
+/* Number flash animations */
+@keyframes flash-green {
+  0%, 100% { color: #10b981; }
+  50% { color: #6ee7b7; }
+}
+@keyframes flash-red {
+  0%, 100% { color: #ef4444; }
+  50% { color: #fca5a5; }
+}
+.flash-profit { animation: flash-green 0.4s ease; }
+.flash-loss   { animation: flash-red   0.4s ease; }
+
+/* Table */
+table { border-collapse: collapse; width: 100%; }
+th { font-weight: 500; text-align: left; color: #6b7280; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+td, th { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* Status indicator */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.status-dot.running  { background: #10b981; box-shadow: 0 0 8px #10b981; animation: pulse 1.5s infinite; }
+.status-dot.idle     { background: #6b7280; }
+.status-dot.stopped  { background: #6b7280; }
+.status-dot.error    { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+.status-dot.connecting, .status-dot.evaluating {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
