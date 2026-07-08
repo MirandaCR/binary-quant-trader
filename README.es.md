@@ -1,10 +1,13 @@
-# Bot de Opciones Binarias — Sistema de Trading con IA Híbrida
+# binary-quant-trader
 
-Un sistema de trading educativo y auto-hospedado para opciones binarias de IQ Option que combina
+**Sistema de trading con IA híbrida para opciones binarias de IQ Option** — combina
 **machine learning tradicional** con **IA generativa (LLM)**, un gestor de riesgo en vivo y un
 dashboard en tiempo real hecho en Next.js.
 
-📄 *English version: [README.md](README.md)*
+📄 *English version: [README.md](README.md)* · 📚 *Documentación completa en [`docs/`](docs/)*
+
+> **Documentación** (en inglés): [Getting Started (paso a paso)](docs/GETTING_STARTED.md) ·
+> [Arquitectura](docs/ARCHITECTURE.md) · [Flujo de IA end-to-end](docs/AI_WORKFLOW.md)
 
 > ### ⚠️ Leé esto primero — aviso honesto
 >

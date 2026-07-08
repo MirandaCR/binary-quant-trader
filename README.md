@@ -1,10 +1,9 @@
-# Binary Options Bot — Hybrid AI Trading System
+# binary-quant-trader
 
-An educational, self-hosted trading system for IQ Option binary options that combines
-**traditional machine learning** with **generative AI (LLM)**, a live risk manager, and a
-real-time Next.js dashboard.
+**Hybrid AI trading system for IQ Option binary options** — combines **traditional machine learning**
+with **generative AI (LLM)**, a live risk manager, and a real-time Next.js dashboard.
 
-📄 *Spanish version: [README.es.md](README.es.md)*
+📄 *Spanish version: [README.es.md](README.es.md)* · 📚 *Full docs in [`docs/`](docs/)*
 
 > ### ⚠️ Read this first — honest disclaimer
 >
@@ -23,6 +22,16 @@ real-time Next.js dashboard.
 >
 > Use it on a **PRACTICE (demo) account** to learn about trading-system architecture, LLM agents,
 > and ML meta-labeling. Trading real money is at your own risk. See [Honest Limitations](#honest-limitations).
+
+---
+
+## 📚 Documentation
+
+| Doc | What's inside |
+|-----|---------------|
+| 🚀 **[Getting Started (for dummies)](docs/GETTING_STARTED.md)** | Zero-assumptions, step-by-step setup: what to install, how to get API keys, how to run and read the dashboard, troubleshooting. |
+| 🏗️ **[Architecture](docs/ARCHITECTURE.md)** | System & engine diagrams (Mermaid), component responsibilities, one-trade sequence, directory map. |
+| 🤖 **[AI Workflow (end to end)](docs/AI_WORKFLOW.md)** | How the two AIs work together — LLM agents that *write* strategies + ML that *judges* them — with full diagrams. |
 
 ---
 
