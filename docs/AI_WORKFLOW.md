@@ -103,16 +103,17 @@ sequenceDiagram
 
 ## Part B — The traditional ML loop (meta-labeling)
 
-While the LLM *creates* strategies, a logistic-regression model *learns which ones actually win* on
-your account, and adjusts confidence accordingly. This is classic quant **meta-labeling**.
+While the LLM *creates* strategies, a small ML model *learns which ones actually win* on your account,
+and adjusts confidence accordingly. This is classic quant **meta-labeling**.
 
 ```mermaid
 flowchart TB
     START([Trade closes: win or loss]) --> STORE["Store result in SQLite"]
     STORE --> COUNT{"≥ 30 closed<br/>trades?"}
     COUNT -->|No| WAIT["ML stays OFF<br/>(confidence unchanged)"]
-    COUNT -->|Yes| TRAIN["Retrain logistic regression<br/>features: strategy, asset, hour, weekday, confidence"]
-    TRAIN --> READY["Model ready"]
+    COUNT -->|Yes| PICK["Pick model:<br/>logistic / xgboost / auto"]
+    PICK --> TRAIN["Train + measure on held-out trades<br/>features: strategy, asset, hour, weekday, confidence"]
+    TRAIN --> READY["Model ready + report card"]
     READY --> SCORE["On next signal:<br/>predict win-probability"]
     SCORE --> BLEND["Blend:<br/>0.7 × strategy_conf + 0.3 × ML_prob"]
     BLEND --> SIZE["Adjusted confidence drives<br/>position size & trade/skip"]
@@ -128,6 +129,30 @@ flowchart TB
 
 > The model activates only after **30+ closed trades** with both wins and losses. Before that, it's a
 > no-op and confidence passes through untouched — you'll see **"ML learning · N/30"** in the dashboard.
+
+### Choosing the model — `logistic`, `xgboost`, or `auto`
+
+Set `ml_model_type` in the config panel or `.env`:
+
+| Option | When to use it |
+|--------|----------------|
+| `logistic` | **Small accounts (default-safe).** A linear model that generalizes well on dozens–hundreds of trades and won't overfit. |
+| `xgboost` | Lots of trade history. Gradient-boosted trees capture non-linear patterns — but overfit on small samples. Falls back to logistic if xgboost isn't installed. |
+| `auto` | **Recommended.** Starts logistic, automatically upgrades to XGBoost once you've accumulated enough trades (150+). |
+
+> **Why one model, not one per asset?** The model already takes `asset` as a *feature*, so it learns
+> per-asset behaviour inside a single model — with far more data behind each prediction. Training a
+> separate model per asset would starve every one of them on a retail-sized account.
+
+### Is the model actually any good? (the report card)
+
+Every time it trains, the scorer holds out 25% of your trades, predicts them, and reports honest
+metrics the dashboard shows in plain English:
+
+- **Accuracy vs baseline** — "guessed right 62% vs 54% for always picking the more common outcome."
+- **Skill score (AUC)** — 0.50 = luck, 1.00 = perfect; honest models sit around 0.55–0.65.
+- **Verdict** — green if it's beating a coin flip, amber/red if it *isn't*. It will tell you when it's
+  not helping. That's the point.
 
 ---
 

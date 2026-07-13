@@ -68,6 +68,7 @@ const DEFAULT_CONFIG: BotConfig = {
   backtest_periods: 150,
   strategy_eval_interval: 300,
   portfolio_size: 3,
+  ml_model_type: "auto",
   news_api_key: "",
   ai_provider: "deepseek",
   ai_api_key: "",
@@ -508,6 +509,26 @@ export default function BotConfigPanel({ status, loading, onStart, onStop, onTes
                 className="w-full bg-bg-raised border border-bg-border rounded-lg px-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-brand/50 disabled:opacity-50 font-mono"
               />
             </div>
+          </section>
+
+          {/* ML model (meta-labeling) */}
+          <section className="space-y-2">
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-1 font-medium">Learning model (ML)</p>
+            <select
+              value={config.ml_model_type ?? "auto"}
+              onChange={e => set("ml_model_type", e.target.value as BotConfig["ml_model_type"])}
+              disabled={isRunning}
+              className="w-full bg-bg-raised border border-bg-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand/50 disabled:opacity-50 font-mono"
+            >
+              <option value="auto">Auto — logistic now, XGBoost once there's data (recommended)</option>
+              <option value="logistic">Logistic Regression — simple & stable</option>
+              <option value="xgboost">XGBoost — advanced, needs lots of trades</option>
+            </select>
+            <p className="text-[10px] text-gray-700 leading-relaxed">
+              The model that learns from your trade history and adjusts each signal's confidence.
+              One shared model uses <span className="text-gray-500">asset</span> as a feature — better than
+              starving a separate model per asset.
+            </p>
           </section>
 
           {/* Test credentials button */}

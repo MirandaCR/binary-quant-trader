@@ -13,6 +13,7 @@ export interface BotConfig {
   backtest_periods: number;
   strategy_eval_interval: number;
   portfolio_size?: number;
+  ml_model_type?: "auto" | "logistic" | "xgboost";
   news_api_key?: string;
   ai_provider?: "deepseek" | "openai" | "gemini" | "anthropic";
   ai_api_key?: string;
@@ -67,9 +68,25 @@ export interface StrategyResult {
   allocation?: number;  // 0-1 share of capital when part of the active portfolio
 }
 
+export interface MLMetrics {
+  reliable?: boolean;
+  reason?: string;
+  model?: string;
+  trained_on?: number;
+  test_size?: number;
+  accuracy?: number;              // 0-1, held-out accuracy
+  baseline_accuracy?: number;     // 0-1, accuracy of always guessing the majority outcome
+  edge_over_guessing?: number;    // accuracy - baseline
+  auc?: number | null;            // 0.5 = coin flip, 1.0 = perfect
+  summary?: string;
+}
+
 export interface MLScorerStatus {
   ready: boolean;
   trained_on: number;
+  model_type?: "auto" | "logistic" | "xgboost";
+  active_model?: "logistic" | "xgboost" | null;
+  metrics?: MLMetrics;
 }
 
 export interface Candle {

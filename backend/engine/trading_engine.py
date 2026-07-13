@@ -78,7 +78,7 @@ class TradingEngine:
         # Traditional ML layer (meta-labeling): learns from trade history which
         # strategy/asset/time/confidence combos actually win, to complement the
         # Gen-AI-designed strategies rather than replace them.
-        self.ml_scorer = SignalScorer()
+        self.ml_scorer = SignalScorer(model_type=getattr(config, "ml_model_type", "auto"))
 
     # ── Lifecycle ─────────────────────────────────────────────────────────────
 
@@ -847,10 +847,7 @@ class TradingEngine:
             "best_combo":    best,
             "all_results":   all_r,
             "portfolio":     self._portfolio_with_allocation(),
-            "ml_scorer":     {
-                "ready":       self.ml_scorer.is_ready,
-                "trained_on":  self.ml_scorer._trained_on,
-            },
+            "ml_scorer":     self.ml_scorer.status(),
             "open_trades":   len(self._open_trades),
             "risk":          self.risk.summary() if self.risk else {},
         }

@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from config.settings import BotConfig, app_settings
-from config.assets import ASSET_GROUPS, all_assets_flat
+from config.assets import ASSET_GROUPS
 from engine.trading_engine import TradingEngine
 from database import db as DB
 from news.news_fetcher import NewsFetcher
@@ -385,87 +385,7 @@ async def get_analysis():
     }
 
 
-# ── AI strategy suggestions (OpenAI/Flexi) ─────────────────────────────────────
-
-class StrategyAskRequest(BaseModel):
-    api_key: Optional[str] = None
-    base_url: Optional[str] = None
-    provider: Optional[str] = None
-    model: Optional[str] = None
-
-
-@app.post("/api/strategies/ask")
-async def ask_strategy_suggestions(body: Optional[StrategyAskRequest] = None):
-    """Ask LLM for new profitable strategies to test. Runs in parallel (non-blocking)."""
-    from services.strategy_suggester import get_strategy_suggestions
-    api_key = body.api_key if body and body.api_key else None
-    base_url = body.base_url if body and body.base_url else None
-    provider = body.provider if body and body.provider else None
-    model = body.model if body and body.model else None
-    existing = []
-    try:
-        from strategies import ALL_STRATEGIES
-        existing = [getattr(s, "name", "") for s in ALL_STRATEGIES]
-    except Exception:
-        pass
-    assets = all_assets_flat()[:20] if callable(all_assets_flat) else []
-    loop = asyncio.get_running_loop()
-    result = await loop.run_in_executor(
-        None,
-        lambda: get_strategy_suggestions(
-            api_key=api_key,
-            base_url=base_url,
-            provider=provider,
-            model=model,
-            existing_strategies=existing,
-            assets_hint=assets,
-        ),
-    )
-    if result.get("error"):
-        raise HTTPException(status_code=502, detail=result["error"])
-    return result
-
-
-# ── Suggestions (assets, strategies, evaluated combos) ─────────────────────────
-
-@app.get("/api/suggestions")
-async def get_suggestions(timeframe: Optional[int] = None):
-    """Return available assets (filtered by timeframe), strategy names, and latest evaluations."""
-    try:
-        from strategies import ALL_STRATEGIES
-        strategy_names = [getattr(s, "name", str(s.__class__.__name__)) for s in ALL_STRATEGIES]
-    except Exception:
-        strategy_names = []
-    try:
-        from config.assets import assets_for_timeframe, ASSET_GROUPS, all_assets_flat
-        tf = timeframe if timeframe is not None else (getattr(_engine.config, "timeframe", 60) if _engine else 60)
-        assets_flat = assets_for_timeframe(tf)
-        # Build asset_groups from flat list for display (single group "Available" for this timeframe)
-        asset_groups = [{"label": f"Timeframe {tf}s", "assets": assets_flat}] if assets_flat else []
-        if not asset_groups and all_assets_flat:
-            asset_groups = ASSET_GROUPS
-            assets_flat = all_assets_flat()
-    except Exception:
-        from config.assets import ASSET_GROUPS, all_assets_flat
-        assets_flat = all_assets_flat()
-        asset_groups = ASSET_GROUPS
-    try:
-        evaluations = DB.get_latest_evaluations()
-        suggestions = sorted(
-            evaluations,
-            key=lambda x: float(x.get("composite_score") or 0),
-            reverse=True,
-        )[:50]
-    except Exception:
-        suggestions = []
-    return {
-        "asset_groups": asset_groups,
-        "assets": assets_flat,
-        "strategies": strategy_names,
-        "suggestions": suggestions,
-        "timeframe": timeframe,
-    }
-
+# ── Live asset availability ────────────────────────────────────────────────────
 
 @app.get("/api/assets/live")
 async def get_live_assets(timeframe: int = 60):
@@ -496,20 +416,6 @@ async def get_live_assets(timeframe: int = 60):
 
     asset_groups = await loop.run_in_executor(None, _probe)
     return {"live": True, "timeframe": timeframe, "asset_groups": asset_groups}
-
-
-@app.post("/api/suggestions/pipeline")
-async def run_suggestions_pipeline_endpoint():
-    """Run the multi-agent suggestions pipeline (DataReviewer → Creator → Tester → Cleaner). Bot must be running."""
-    if not _engine or getattr(_engine, "_status", None) != "running":
-        raise HTTPException(status_code=400, detail="Bot must be running to execute the pipeline (needs live candle data).")
-    from agents.suggestions_pipeline import run_suggestions_pipeline
-    loop = asyncio.get_running_loop()
-    result = await loop.run_in_executor(
-        None,
-        lambda: run_suggestions_pipeline(_engine.config, _engine, on_step=None),
-    )
-    return result
 
 
 # ── Health ────────────────────────────────────────────────────────────────────

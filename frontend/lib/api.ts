@@ -95,31 +95,3 @@ export const getNews = (asset?: string) => {
   const qs = asset ? `?asset=${asset}` : "";
   return request<{ articles: NewsArticle[] }>(`/api/news${qs}`);
 };
-
-// ── Suggestions ───────────────────────────────────────────────────────────────
-
-export interface SuggestionsResponse {
-  asset_groups: { label: string; assets: string[] }[];
-  assets: string[];
-  strategies: string[];
-  suggestions: StrategyResult[];
-  timeframe?: number;
-}
-
-export const getSuggestions = (timeframe?: number) => {
-  const qs = timeframe != null ? `?timeframe=${timeframe}` : "";
-  return request<SuggestionsResponse>(`/api/suggestions${qs}`);
-};
-
-export const runSuggestionsPipeline = () =>
-  request<{ steps: { agent: string; status: string; message: string }[]; new_strategies_added: string[]; pruned: string[] }>(
-    "/api/suggestions/pipeline",
-    { method: "POST" }
-  );
-
-// Ask LLM (OpenAI/Flexi) for new strategies to test
-export const askStrategySuggestions = (body?: { api_key?: string; base_url?: string }) =>
-  request<{ suggestions: string[]; raw_response: string; error: string | null }>(
-    "/api/strategies/ask",
-    { method: "POST", body: JSON.stringify(body ?? {}) }
-  );

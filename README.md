@@ -50,13 +50,35 @@ A well-structured example of how to combine several ideas into one live trading 
 Good software engineering and a profitable edge are **different things** — this project delivers the
 former honestly and makes no promises about the latter.
 
+## The two AIs (and why there are two)
+
+The heart of this project is that it uses **two completely different kinds of AI that do opposite jobs**.
+Most "AI trading bots" use one model and hope. This one uses two, and makes them check each other.
+
+| | 🧠 Generative AI (LLM) | 📊 Traditional ML |
+|--|------------------------|-------------------|
+| **Its job** | **CREATES** the strategies | **JUDGES** the signals |
+| **What it does** | Reads market news and *writes brand-new Python strategy code from scratch*, backtests it, keeps the winners, and rewrites the losers. | Learns from your *real* closed trades which strategy/asset/time combos actually win, and turns each signal's confidence up or down accordingly. |
+| **Tech** | DeepSeek / OpenAI / Gemini / Claude (swappable) | Logistic Regression or XGBoost (selectable) |
+| **Where you see it** | The **AI Agents** tab — six agents working live | The **"How good is the AI, really?"** panel on the Overview tab |
+| **Personality** | The confident creative who invents ideas | The skeptic who's seen every idea fail before |
+
+**In one sentence:** the generative AI is the *engine that invents and evolves* the strategies you trade;
+the traditional ML is the *filter that decides how much to trust each one*. Remove the generative AI and
+the bot is stuck with its 21 built-in strategies forever, never adapting. Remove the ML and every signal
+is taken at face value, even the ones history says are lying. They need each other.
+
+> This is the classic quant technique called **meta-labeling**: never let one model both generate *and*
+> validate its own ideas — bring in a second, skeptical model to grade the first one's homework.
+
 ## Features
 
 | Area | What it does |
 |------|--------------|
 | **Multiple LLM providers** | DeepSeek (default), OpenAI/ChatGPT, Google Gemini, Anthropic Claude — switchable in the UI. |
 | **Multi-agent system** | News → Research → Backtest → Trade Analysis → Parameter Optimizer, generating and pruning strategies live. |
-| **ML signal scorer** | Logistic-regression meta-labeling trained on your closed trades (activates after 30+ trades). |
+| **ML signal scorer** | Meta-labeling trained on your closed trades (activates after 30+). Model is selectable: `logistic`, `xgboost`, or `auto` (upgrades logistic→XGBoost as data grows). |
+| **Plain-English model report card** | The dashboard translates model performance into "the AI guessed 62% vs 54% for a coin flip" — and honestly says so when it's *not* beating the coin. |
 | **Dynamic portfolio** | Trades up to N distinct assets per candle; capital split by backtest score (not multiplied). |
 | **Risk management** | Daily-loss / consecutive-loss soft limits, compound interest option, hard stop kill-switch. |
 | **Anti-fingerprinting** | Randomized entry timing and ±3% position-size jitter to avoid perfectly-periodic bot patterns. |

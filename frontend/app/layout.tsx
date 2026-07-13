@@ -3,8 +3,9 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "Binary Bot | Trading Dashboard",
-  description: "Algorithmic binary options trading with AI, Statistical, Physics & Math strategies",
+  title: "binary-quant-trader",
+  description: "Hybrid AI trading system for IQ Option binary options — generative LLM agents + traditional ML meta-labeling.",
+  icons: { icon: "/icon.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

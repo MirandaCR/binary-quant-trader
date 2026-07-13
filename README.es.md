@@ -48,13 +48,36 @@ Un ejemplo bien estructurado de cómo combinar varias ideas en un solo loop de t
 Buena ingeniería y ventaja rentable son **cosas distintas** — este proyecto entrega lo primero de
 forma honesta y no promete lo segundo.
 
+## Las dos IAs (y por qué hay dos)
+
+El corazón de este proyecto es que usa **dos tipos de IA completamente distintos que hacen trabajos
+opuestos**. La mayoría de los "bots de trading con IA" usan un modelo y rezan. Este usa dos, y hace que
+se controlen entre sí.
+
+| | 🧠 IA Generativa (LLM) | 📊 ML Tradicional |
+|--|------------------------|-------------------|
+| **Su trabajo** | **CREA** las estrategias | **JUZGA** las señales |
+| **Qué hace** | Lee noticias de mercado y *escribe código de estrategias nuevas en Python desde cero*, las backtestea, se queda con las ganadoras y reescribe las perdedoras. | Aprende de tus operaciones reales cerradas qué combos de estrategia/activo/horario ganan de verdad, y sube o baja la confianza de cada señal en consecuencia. |
+| **Tecnología** | DeepSeek / OpenAI / Gemini / Claude (intercambiable) | Regresión Logística o XGBoost (seleccionable) |
+| **Dónde la ves** | El tab **AI Agents** — seis agentes trabajando en vivo | El panel **"How good is the AI, really?"** en el tab Overview |
+| **Personalidad** | El creativo seguro que inventa ideas | El escéptico que ya vio fracasar cada idea |
+
+**En una frase:** la IA generativa es el *motor que inventa y evoluciona* las estrategias que operás;
+el ML tradicional es el *filtro que decide cuánto confiar en cada una*. Sacá la IA generativa y el bot
+queda atascado con sus 21 estrategias fijas para siempre, sin adaptarse. Sacá el ML y cada señal se
+toma tal cual, incluso las que el historial dice que están mintiendo. Se necesitan mutuamente.
+
+> Esta es la técnica cuant clásica llamada **meta-labeling**: nunca dejes que un mismo modelo genere *y*
+> valide sus propias ideas — traé un segundo modelo escéptico a corregirle la tarea al primero.
+
 ## Características
 
 | Área | Qué hace |
 |------|----------|
 | **Múltiples proveedores LLM** | DeepSeek (default), OpenAI/ChatGPT, Google Gemini, Anthropic Claude — intercambiables en la UI. |
 | **Sistema multi-agente** | Noticias → Research → Backtest → Análisis → Optimizador, generando y podando estrategias en vivo. |
-| **Scorer ML de señales** | Meta-labeling con regresión logística entrenado con tus operaciones cerradas (se activa a los 30+ trades). |
+| **Scorer ML de señales** | Meta-labeling entrenado con tus operaciones cerradas (se activa a los 30+). Modelo seleccionable: `logistic`, `xgboost` o `auto` (sube de logistic→XGBoost a medida que crecen los datos). |
+| **Boletín del modelo en lenguaje simple** | El dashboard traduce la performance a "la IA acertó 62% vs 54% de tirar una moneda" — y lo admite honestamente cuando *no* le gana a la moneda. |
 | **Portfolio dinámico** | Opera hasta N activos distintos por vela; capital repartido por score de backtest (no multiplicado). |
 | **Gestión de riesgo** | Límites suaves de pérdida diaria / consecutiva, opción de interés compuesto, hard stop kill-switch. |
 | **Anti-detección** | Timing de entrada aleatorio y jitter de ±3% en el tamaño para evitar patrones perfectamente periódicos. |

@@ -8,6 +8,7 @@ import BotConfigPanel from "@/components/BotConfigPanel";
 import TradeHistory from "@/components/TradeHistory";
 import StrategyPerformance from "@/components/StrategyPerformance";
 import PortfolioPanel from "@/components/PortfolioPanel";
+import MLPerformancePanel from "@/components/MLPerformancePanel";
 import PnLCalendar from "@/components/PnLCalendar";
 import NewsPanel from "@/components/NewsPanel";
 import LiveTicker from "@/components/LiveTicker";
@@ -133,6 +134,7 @@ export default function DashboardPage() {
                   mlScorer={state.ml_scorer}
                   status={state.status}
                 />
+                <MLPerformancePanel mlScorer={state.ml_scorer} status={state.status} />
                 <TradeHistory trades={trades} balance={state.balance} onClearHistory={clearHistory} />
               </>
             )}

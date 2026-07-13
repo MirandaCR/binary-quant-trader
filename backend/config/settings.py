@@ -24,6 +24,7 @@ class BotConfig(BaseModel):
     strategy_eval_interval: int = 300       # seconds between background re-evaluations
     portfolio_size: int = 3                 # concurrent distinct-asset combos traded per cycle;
                                              # capital is split across them by composite score, not multiplied
+    ml_model_type: str = "auto"             # ML meta-labeling model: "auto" | "logistic" | "xgboost"
     news_api_key: Optional[str] = os.environ.get("NEWSAPI_KEY")
     ai_provider: str = os.environ.get("AI_PROVIDER", "deepseek")  # "deepseek" | "openai" | "gemini" | "anthropic"
     ai_api_key: Optional[str] = os.environ.get("AI_API_KEY")
@@ -69,6 +70,14 @@ class BotConfig(BaseModel):
     @classmethod
     def validate_portfolio_size(cls, v: int) -> int:
         return max(1, min(v, 10))
+
+    @field_validator("ml_model_type")
+    @classmethod
+    def validate_ml_model_type(cls, v: str) -> str:
+        v = (v or "auto").lower().strip()
+        if v not in ("auto", "logistic", "xgboost"):
+            raise ValueError("ml_model_type must be auto, logistic, or xgboost")
+        return v
 
 
 class AppSettings:
