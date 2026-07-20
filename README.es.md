@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/logo.svg" alt="binary-quant-trader" width="820"/>
+  <img src="docs/assets/logo.png" alt="binary-quant-trader" width="820"/>
 </p>
 
 <p align="center">
@@ -78,7 +78,7 @@ toma tal cual, incluso las que el historial dice que están mintiendo. Se necesi
 ## El dashboard
 
 <p align="center">
-  <img src="docs/assets/dashboard-preview.svg" alt="dashboard de binary-quant-trader — Portfolio activo y el boletín honesto de la IA" width="900"/>
+  <img src="docs/assets/dashboard-preview.png" alt="dashboard de binary-quant-trader — Portfolio activo y el boletín honesto de la IA" width="900"/>
 </p>
 
 <p align="center"><sub>Tab Overview: el portfolio en vivo con capital repartido por score, y el boletín en lenguaje simple de la capa de ML que admite cuando <em>no</em> le gana a una moneda. <em>(Preview fiel de la UI — reemplazalo con tu propia captura cuando lo corras en cuenta demo.)</em></sub></p>

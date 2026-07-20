@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/logo.svg" alt="binary-quant-trader" width="820"/>
+  <img src="docs/assets/logo.png" alt="binary-quant-trader" width="820"/>
 </p>
 
 <p align="center">
@@ -80,7 +80,7 @@ is taken at face value, even the ones history says are lying. They need each oth
 ## The dashboard
 
 <p align="center">
-  <img src="docs/assets/dashboard-preview.svg" alt="binary-quant-trader dashboard — Active Portfolio and the AI's honest report card" width="900"/>
+  <img src="docs/assets/dashboard-preview.png" alt="binary-quant-trader dashboard — Active Portfolio and the AI's honest report card" width="900"/>
 </p>
 
 <p align="center"><sub>Overview tab: the live portfolio with score-weighted capital, and the ML layer's plain-English report card that admits when it's <em>not</em> beating a coin flip. <em>(Faithful UI preview — drop in your own screenshot once you run it on a demo account.)</em></sub></p>
