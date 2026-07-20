@@ -841,6 +841,10 @@ class TradingEngine:
         with self._eval_lock:
             best = self._best_combo.to_dict() if self._best_combo else None
             all_r = [r.to_dict() for r in self._all_results[:20]]
+        # Which generative-AI provider the agents are actually using this session
+        # (only meaningful when an API key is configured).
+        ai_provider = getattr(self.config, "ai_provider", None) if getattr(self.config, "ai_api_key", None) else None
+
         return {
             "status":        self._status,
             "balance":       self._balance,
@@ -848,6 +852,7 @@ class TradingEngine:
             "all_results":   all_r,
             "portfolio":     self._portfolio_with_allocation(),
             "ml_scorer":     self.ml_scorer.status(),
+            "ai_provider":   ai_provider,
             "open_trades":   len(self._open_trades),
             "risk":          self.risk.summary() if self.risk else {},
         }

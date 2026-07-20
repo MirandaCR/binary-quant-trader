@@ -1,0 +1,78 @@
+<svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="binary-quant-trader dashboard preview">
+  <rect width="1200" height="720" fill="#000000"/>
+
+  <!-- top bar -->
+  <rect x="0" y="0" width="1200" height="56" fill="#0a0a0a"/>
+  <rect x="28" y="18" width="22" height="22" rx="5" fill="#b026ff"/>
+  <text x="62" y="34" font-family="'JetBrains Mono',monospace" font-size="16" fill="#e5e5e5">binary-quant-trader</text>
+  <circle cx="1000" cy="28" r="4" fill="#10b981"/>
+  <text x="1012" y="33" font-family="'JetBrains Mono',monospace" font-size="13" fill="#10b981">RUNNING</text>
+  <text x="1100" y="33" font-family="'JetBrains Mono',monospace" font-size="13" fill="#a3a3a3">$10,000</text>
+
+  <!-- stat cards row -->
+  <g font-family="Arial,sans-serif">
+    <rect x="28" y="76" width="270" height="70" rx="10" fill="#0a0a0a" stroke="#262626"/>
+    <text x="44" y="100" font-size="11" fill="#737373">TOTAL P&amp;L</text>
+    <text x="44" y="128" font-family="'JetBrains Mono',monospace" font-size="22" font-weight="700" fill="#10b981">+$412.50</text>
+    <rect x="312" y="76" width="270" height="70" rx="10" fill="#0a0a0a" stroke="#262626"/>
+    <text x="328" y="100" font-size="11" fill="#737373">WIN RATE</text>
+    <text x="328" y="128" font-family="'JetBrains Mono',monospace" font-size="22" font-weight="700" fill="#10b981">61.4%</text>
+    <rect x="596" y="76" width="270" height="70" rx="10" fill="#0a0a0a" stroke="#262626"/>
+    <text x="612" y="100" font-size="11" fill="#737373">OPEN TRADES</text>
+    <text x="612" y="128" font-family="'JetBrains Mono',monospace" font-size="22" font-weight="700" fill="#b026ff">2</text>
+    <rect x="880" y="76" width="292" height="70" rx="10" fill="#0a0a0a" stroke="#262626"/>
+    <text x="896" y="100" font-size="11" fill="#737373">CONSEC. LOSSES</text>
+    <text x="896" y="128" font-family="'JetBrains Mono',monospace" font-size="22" font-weight="700" fill="#e5e5e5">0</text>
+  </g>
+
+  <!-- Active Portfolio panel -->
+  <rect x="28" y="164" width="1144" height="196" rx="12" fill="#0a0a0a" stroke="#262626"/>
+  <rect x="48" y="184" width="14" height="14" rx="3" fill="none" stroke="#b026ff" stroke-width="1.5"/>
+  <text x="72" y="196" font-family="Arial" font-size="15" font-weight="700" fill="#e5e5e5">Active Portfolio</text>
+  <text x="218" y="196" font-family="Arial" font-size="11" fill="#525252">3 assets traded concurrently</text>
+  <text x="1010" y="196" font-family="'JetBrains Mono',monospace" font-size="11" fill="#10b981">● ML active · 45 trades</text>
+
+  <g font-family="Arial">
+    <text x="48" y="232" font-size="13" font-weight="600" fill="#e5e5e5">EURUSD-OTC</text>
+    <text x="48" y="248" font-size="10" fill="#525252">RSI_Momentum_Reversal</text>
+    <rect x="230" y="228" width="660" height="8" rx="4" fill="#141414"/><rect x="230" y="228" width="305" height="8" rx="4" fill="#b026ff" fill-opacity="0.7"/>
+    <text x="908" y="236" font-family="'JetBrains Mono',monospace" font-size="12" fill="#b026ff">47%</text>
+    <text x="968" y="236" font-family="'JetBrains Mono',monospace" font-size="12" fill="#10b981">↑ 68%</text>
+
+    <text x="48" y="280" font-size="13" font-weight="600" fill="#e5e5e5">GBPUSD-OTC</text>
+    <text x="48" y="296" font-size="10" fill="#525252">MACD_Cross_Filter</text>
+    <rect x="230" y="276" width="660" height="8" rx="4" fill="#141414"/><rect x="230" y="276" width="205" height="8" rx="4" fill="#b026ff" fill-opacity="0.7"/>
+    <text x="908" y="284" font-family="'JetBrains Mono',monospace" font-size="12" fill="#b026ff">31%</text>
+    <text x="968" y="284" font-family="'JetBrains Mono',monospace" font-size="12" fill="#10b981">↑ 61%</text>
+
+    <text x="48" y="328" font-size="13" font-weight="600" fill="#e5e5e5">BTCUSD-OTC</text>
+    <text x="48" y="344" font-size="10" fill="#525252">Bollinger_Momentum</text>
+    <rect x="230" y="324" width="660" height="8" rx="4" fill="#141414"/><rect x="230" y="324" width="150" height="8" rx="4" fill="#b026ff" fill-opacity="0.7"/>
+    <text x="908" y="332" font-family="'JetBrains Mono',monospace" font-size="12" fill="#b026ff">22%</text>
+    <text x="968" y="332" font-family="'JetBrains Mono',monospace" font-size="12" fill="#ef4444">↓ 49%</text>
+  </g>
+
+  <!-- ML report card panel -->
+  <rect x="28" y="376" width="1144" height="316" rx="12" fill="#0a0a0a" stroke="#262626"/>
+  <text x="48" y="410" font-family="Arial" font-size="15" font-weight="700" fill="#e5e5e5">How good is the AI, really?</text>
+  <text x="48" y="432" font-family="Arial" font-size="11" fill="#525252">Model in use:</text>
+  <rect x="138" y="420" width="180" height="18" rx="4" fill="#b026ff" fill-opacity="0.1" stroke="#b026ff" stroke-opacity="0.2"/>
+  <text x="148" y="433" font-family="'JetBrains Mono',monospace" font-size="10" fill="#b026ff">XGBoost — advanced</text>
+
+  <text x="48" y="470" font-family="Arial" font-size="12" fill="#a3a3a3">On 30 trades it had never seen before, the AI guessed win-or-lose correctly:</text>
+
+  <text x="48" y="510" font-family="Arial" font-size="12" fill="#a3a3a3">🤖 The AI</text>
+  <rect x="190" y="496" width="840" height="22" rx="5" fill="#000000"/>
+  <rect x="190" y="496" width="521" height="22" rx="5" fill="#10b981"/>
+  <text x="686" y="511" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#00140c">62%</text>
+
+  <text x="48" y="546" font-family="Arial" font-size="12" fill="#a3a3a3">🪙 Just guessing</text>
+  <rect x="190" y="532" width="840" height="22" rx="5" fill="#000000"/>
+  <rect x="190" y="532" width="454" height="22" rx="5" fill="#525252"/>
+  <text x="620" y="547" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="#000">54%</text>
+
+  <line x1="48" y1="578" x2="1152" y2="578" stroke="#262626"/>
+  <text x="48" y="608" font-family="Arial" font-size="13" font-weight="600" fill="#10b981">✅ It's beating a coin flip by 8 points — genuinely learning something.</text>
+  <text x="48" y="640" font-family="Arial" font-size="11" fill="#737373">Skill score: 0.63 / 1.00.  0.50 = pure luck (coin flip), 1.00 = magically perfect.</text>
+  <text x="48" y="670" font-family="Arial" font-size="10" fill="#404040">Measured on trades the AI was NOT trained on — the honest way.</text>
+</svg>

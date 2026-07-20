@@ -144,6 +144,7 @@ export default function DashboardPage() {
                 agentsState={agentsState}
                 activityLog={agentActivityLog}
                 cycle={agentCycle}
+                activeProvider={state.ai_provider}
               />
             )}
 

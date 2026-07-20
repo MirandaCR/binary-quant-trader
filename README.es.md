@@ -1,10 +1,15 @@
-# binary-quant-trader
+<p align="center">
+  <img src="docs/assets/logo.svg" alt="binary-quant-trader" width="820"/>
+</p>
 
-**Sistema de trading con IA híbrida para opciones binarias de IQ Option** — combina
-**machine learning tradicional** con **IA generativa (LLM)**, un gestor de riesgo en vivo y un
-dashboard en tiempo real hecho en Next.js.
+<p align="center">
+  <strong>Sistema de trading con IA híbrida para opciones binarias de IQ Option</strong><br/>
+  machine learning tradicional + IA generativa (LLM), un gestor de riesgo en vivo y un dashboard en tiempo real.
+</p>
 
-📄 *English version: [README.md](README.md)* · 📚 *Documentación completa en [`docs/`](docs/)*
+<p align="center">
+  📄 <a href="README.md">English</a> &nbsp;·&nbsp; 📚 <a href="docs/">Documentación</a> &nbsp;·&nbsp; ⚖️ AGPL-3.0
+</p>
 
 > **Documentación** (en inglés): [Getting Started (paso a paso)](docs/GETTING_STARTED.md) ·
 > [Arquitectura](docs/ARCHITECTURE.md) · [Flujo de IA end-to-end](docs/AI_WORKFLOW.md)
@@ -69,6 +74,14 @@ toma tal cual, incluso las que el historial dice que están mintiendo. Se necesi
 
 > Esta es la técnica cuant clásica llamada **meta-labeling**: nunca dejes que un mismo modelo genere *y*
 > valide sus propias ideas — traé un segundo modelo escéptico a corregirle la tarea al primero.
+
+## El dashboard
+
+<p align="center">
+  <img src="docs/assets/dashboard-preview.svg" alt="dashboard de binary-quant-trader — Portfolio activo y el boletín honesto de la IA" width="900"/>
+</p>
+
+<p align="center"><sub>Tab Overview: el portfolio en vivo con capital repartido por score, y el boletín en lenguaje simple de la capa de ML que admite cuando <em>no</em> le gana a una moneda. <em>(Preview fiel de la UI — reemplazalo con tu propia captura cuando lo corras en cuenta demo.)</em></sub></p>
 
 ## Características
 

@@ -17,6 +17,7 @@ const INITIAL_STATE: BotState = {
   all_results: [],
   portfolio:   [],
   ml_scorer:   { ready: false, trained_on: 0 },
+  ai_provider: null,
   open_trades: 0,
   risk: {
     daily_profit: 0, consecutive_losses: 0,
@@ -87,6 +88,7 @@ export function useBot() {
           status:      s.status      ?? prev.status,
           portfolio:   (s as any).portfolio ?? prev.portfolio,
           ml_scorer:   (s as any).ml_scorer ?? prev.ml_scorer,
+          ai_provider: (s as any).ai_provider ?? prev.ai_provider,
         })))
         .catch(() => {});
       api.getTrades(100)
@@ -111,6 +113,7 @@ export function useBot() {
           all_results: (msg as any).all_results ?? [],
           portfolio:   (msg as any).portfolio   ?? [],
           ml_scorer:   (msg as any).ml_scorer   ?? INITIAL_STATE.ml_scorer,
+          ai_provider: (msg as any).ai_provider ?? null,
           open_trades: (msg as any).open_trades ?? 0,
           risk:        (msg as any).risk        ?? INITIAL_STATE.risk,
         });

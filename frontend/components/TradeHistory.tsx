@@ -5,8 +5,7 @@ import type { Trade } from "@/types";
 import { TrendingUp, TrendingDown, Clock, Trash2, Download, Filter } from "lucide-react";
 import { cn, timeAgo, formatDateTime } from "@/lib/utils";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-
-const API_URL = "http://localhost:8100";
+import { API_URL } from "@/lib/config";
 
 interface Props {
   trades: Trade[];

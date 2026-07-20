@@ -260,7 +260,15 @@ interface AgentFlowProps {
   agentsState: Record<string, AgentInfo>;
   activityLog: AgentActivityEntry[];
   cycle: number;
+  activeProvider?: string | null;
 }
+
+const PROVIDER_LABEL: Record<string, string> = {
+  deepseek: "DeepSeek",
+  openai: "ChatGPT (OpenAI)",
+  gemini: "Gemini (Google)",
+  anthropic: "Claude (Anthropic)",
+};
 
 const SUB_AGENT_ORDER = [
   "NewsAgent",
@@ -270,7 +278,7 @@ const SUB_AGENT_ORDER = [
   "ParameterOptimizer",
 ];
 
-export default function AgentFlow({ agentsState, activityLog, cycle }: AgentFlowProps) {
+export default function AgentFlow({ agentsState, activityLog, cycle, activeProvider }: AgentFlowProps) {
   const orchestrator = agentsState["OrchestratorAgent"];
   const subAgents = SUB_AGENT_ORDER.filter(n => agentsState[n]);
   const hasData = orchestrator || subAgents.length > 0;
@@ -293,17 +301,30 @@ export default function AgentFlow({ agentsState, activityLog, cycle }: AgentFlow
 
       {/* Orchestrator master card */}
       <div className="bg-bg-surface border border-bg-border rounded-xl p-4">
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-brand animate-pulse" />
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
             Multi-Agent Orchestration System
           </span>
+          {activeProvider && (
+            <span className="text-[10px] font-mono text-brand bg-brand/10 border border-brand/20 px-2 py-0.5 rounded-full">
+              🧠 {PROVIDER_LABEL[activeProvider] ?? activeProvider}
+            </span>
+          )}
           {cycle > 0 && (
             <span className="ml-auto text-[10px] font-mono text-gray-600 bg-bg-raised border border-bg-border px-2 py-0.5 rounded-full">
               Total cycles: {cycle}
             </span>
           )}
         </div>
+
+        {/* Clarify what these agents do — and what they DON'T do */}
+        <p className="text-[11px] text-gray-600 mb-3 leading-relaxed">
+          These agents are the <span className="text-gray-400">R&amp;D team</span>: they research news and
+          <span className="text-gray-400"> write, test, and prune trading strategies</span>. They do
+          <span className="text-gray-400 font-medium"> not place trades themselves</span> — the trading
+          engine executes the best strategies they produce.
+        </p>
 
         {orchestrator && (
           <OrchestratorCard info={orchestrator} cycle={cycle} />

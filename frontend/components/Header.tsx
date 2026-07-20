@@ -2,8 +2,7 @@
 
 import React from "react";
 import type { BotState } from "@/types";
-
-const API_URL = "http://localhost:8100";
+import { API_URL } from "@/lib/config";
 
 const STATUS_LABELS: Record<BotState["status"], string> = {
   idle:        "Idle",

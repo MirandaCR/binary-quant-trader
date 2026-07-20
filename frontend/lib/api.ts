@@ -1,7 +1,5 @@
 import type { BotConfig, Trade, TradeStats, StrategyResult, DailyPnL, NewsArticle, BotState } from "@/types";
-
-// Hardcoded to avoid env-var resolution issues in Windows/Anaconda environments
-const BASE = "http://localhost:8100";
+import { API_URL as BASE } from "@/lib/config";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {

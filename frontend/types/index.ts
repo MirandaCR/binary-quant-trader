@@ -144,6 +144,7 @@ export interface BotState {
   all_results: StrategyResult[];
   portfolio?: StrategyResult[];
   ml_scorer?: MLScorerStatus;
+  ai_provider?: string | null;
   open_trades: number;
   risk: RiskSummary;
 }

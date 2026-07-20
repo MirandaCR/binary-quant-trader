@@ -2,9 +2,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import type { WsMessage } from "@/types";
-
-// Hardcoded to avoid env-var resolution issues in Windows/Anaconda environments
-const WS_URL = "ws://localhost:8100/ws";
+import { WS_URL } from "@/lib/config";
 
 export function useWebSocket(onMessage: (msg: WsMessage) => void) {
   const wsRef        = useRef<WebSocket | null>(null);
